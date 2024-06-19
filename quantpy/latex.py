@@ -36,7 +36,13 @@ def read_qtl(data_path: str, eff: dict, se: dict) -> list[str]:
     qtl = pd.read_csv(data_path)
     qtl_list = []
     for _, row in qtl.iterrows():
-        loci, A, H, B = row.iloc[0], row.iloc[3], row.iloc[4], row.iloc[5]
+        loci, A, H, B, gene = (
+            row.iloc[0],
+            row.iloc[1],
+            row.iloc[2],
+            row.iloc[3],
+            row.iloc[4],
+        )
 
         meaneff = EqPopMeanEffect(
             f=np.array([0.5, 0.5]), y=np.array([A, H, B])
@@ -47,7 +53,7 @@ def read_qtl(data_path: str, eff: dict, se: dict) -> list[str]:
                 f"{meaneff.a:.2f}",
                 f"{meaneff.d:.2f}",
                 f"{meaneff.d_by_a:.2f}",
-                "",
+                "\\textif{" + f"{gene}" + "}",
             ]
         )
     qtl_list.append(["...", "...", "...", "...", ""])
